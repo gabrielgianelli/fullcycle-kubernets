@@ -8,7 +8,7 @@ spec:
   selector:
     matchLabels:
       app: goserver
-  replicas: 2
+  replicas: 1
   template: 
     metadata:
       labels:
@@ -16,18 +16,17 @@ spec:
     spec:
       containers:
         - name: goserver
-          image: "gabrielgianelli/hello-go:v4"
+          image: "gabrielgianelli/hello-go:v5.1"
           envFrom:
             - configMapRef:
                 name: goserver-env
-          # env:
-          #   - name: NAME
-          #     valueFrom:
-          #       configMapKeyRef:
-          #         name: goserver-env
-          #         key: NAME
-          #   - name: AGE
-          #     valueFrom:
-          #       configMapKeyRef:
-          #         name: goserver-env
-          #         key: AGE
+          volumeMounts:
+            - mountPath: "/mygames"
+              name: config
+      volumes:
+        - name: config
+          configMap:
+            name: configmap-games
+            items:
+              - key: playing
+                path: "games.txt"
