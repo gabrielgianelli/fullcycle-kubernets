@@ -16,7 +16,14 @@ spec:
     spec:
       containers:
         - name: goserver
-          image: "gabrielgianelli/hello-go:v5.5"
+          image: "gabrielgianelli/hello-go:v5.6"
+          resources:
+            requests:
+              cpu: 100m
+              memory: 20Mi
+            limits:
+              cpu: 500m
+              memory: 25Mi
           startupProbe:
             httpGet:
               path: "/healthz"
